@@ -1,22 +1,91 @@
-import React,{useEffect,useRef,useState}from'react';
-import{createRoot}from'react-dom/client';
-import{Canvas,useFrame}from'@react-three/fiber';
-import{Float,Stars}from'@react-three/drei';
-import'./styles.css';
-const defaults=[['Registration Opens','Start your journey.'],['Innovation Mixer','Meet collaborators and form teams where needed.'],['Market Validation Round','Test relevance, feasibility, and real-world potential.'],['Innovation Sprint','Move ideas forward through focused development.'],['Milestone I','Present ongoing progress and learning.'],['Milestone II','Advance implementation toward the next stage.'],['Semi-Finals','Compete in the penultimate evaluation stage.'],['Grand-Finale with Mayukh','Celebrate the final showcase of the journey.']].map(([name,description],i)=>({id:i+1,name,description,date:'To Be Announced',status:'To Be Announced'}));
-function Scene(){const g=useRef();useFrame(s=>{if(g.current)g.current.rotation.y=s.clock.elapsedTime*.04});return <group ref={g}><Stars radius={55} depth={25} count={500} factor={2} saturation={0} fade speed={.3}/><Float speed={1.5} rotationIntensity={.3}><mesh><icosahedronGeometry args={[1.45,2]}/><meshStandardMaterial color="#1c70d5" wireframe/></mesh></Float><ambientLight intensity={1}/><pointLight position={[4,3,4]} color="#8dc5ff" intensity={32}/></group>};
-function Backdrop(){return <Canvas className="scene" camera={{position:[0,0,6],fov:48}} dpr={[1,1.5]}><color attach="background" args={['#06142c']}/><Scene/></Canvas>};
-function Intro({done}){useEffect(()=>{let t=setTimeout(done,1800);return()=>clearTimeout(t)},[done]);return <div className="intro" onClick={done}><div className="flashes">{Array.from({length:12},(_,i)=><i key={i} style={{'--i':i}}/>)}</div><div><small>ACM STUDENT CHAPTER · BANASTHALI VIDYAPITH</small><h1>TECHNOVERSE <em>2.0</em></h1><p>The Journey from Idea to Impact</p></div><button>Skip intro →</button></div>};
-const nav=[['about','About'],['rules','Rules & Regulations'],['eligibility','Eligibility'],['journey','Events'],['leaderboard','Leaderboard']];
-function Navigation(){return <nav><a className="mark" href="#home">T<span>V</span></a>{nav.map(([id,label],i)=><a key={id} href={'#'+id}><small>0{i+1}</small>{label}</a>)}<a className="nav-cta" href="#register">Register ↗</a></nav>};
-function Register(){let url=import.meta.env.VITE_REGISTRATION_FORM_URL;return <button className="button" onClick={()=>url?window.open(url,'_blank','noopener,noreferrer'):alert('Registration link will be announced by ACM Student Chapter.')}>Register now <b>↗</b></button>};
-function Heading({n,kicker,children}){return <header className="heading"><span>{n}</span><div><small>{kicker}</small><h2>{children}</h2></div></header>};
-function Hero(){return <section className="hero" id="home"><Backdrop/><div className="hero-copy"><small>Presented by ACM Student Chapter, Banasthali Vidyapith</small><h1>TECHNO<span>VERSE</span><em>2.0</em></h1><p>A continuous year-long journey where bold ideas become grounded, real-world solutions.</p><Register/><a href="#journey">Explore the journey ↓</a></div><aside>01 — 08<br/><b>Idea → Validate → Build → Impact</b></aside></section>};
-function About(){return <section className="section" id="about"><Heading n="01" kicker="THE PREMISE">Innovation has momentum.</Heading><div className="two"><p className="lead">Technoverse 2.0 is a structured, continuous innovation journey for turning ideas into meaningful impact—not a sequence of unrelated events.</p><div><p>Building on the previous edition, it brings students from diverse disciplines together for ideation, mentorship, prototype development, market validation, evaluation, and competitive pitching.</p><p>With a Market Validation Checkpoint, reduced gaps between rounds, Unstop integration, and greater focus on implementation, the journey keeps teams moving forward.</p></div></div><div className="ticker">IDEATE · MENTOR · VALIDATE · IMPLEMENT · PITCH · IDEATE · MENTOR · VALIDATE · IMPLEMENT · PITCH</div></section>};
-function Why(){let x=[['Transform Ideas into Reality','Build innovative solutions for real-world challenges.'],['Collaborate Across Disciplines','Work with students from diverse backgrounds and learn from different perspectives.'],['Enhance Your Skills','Develop technical, presentation, teamwork, and problem-solving abilities through multiple evaluation rounds.'],['Validate Your Innovation','Receive mentor feedback and real user validation to refine your idea’s market potential.'],['Gain Recognition & Opportunities','Showcase your project, compete for exciting prizes, certificates, and valuable networking opportunities.']];return <section className="section"><Heading n="02" kicker="REASONS TO BEGIN">Why participate?</Heading><div className="cards">{x.map(([h,p],i)=><article key={h}><small>0{i+1}</small><h3>{h}</h3><p>{p}</p><b>↗</b></article>)}</div></section>};
-function Journey({events}){let[a,setA]=useState(0),e=events[a];return <section id="journey" className="section journey"><Heading n="03" kicker="ONE COMPETITION · EIGHT CHECKPOINTS">The journey is the event.</Heading><div className="journey-grid"><div className="steps">{events.map((x,i)=><button onClick={()=>setA(i)} className={i===a?'active':''} key={x.id}><small>{String(i+1).padStart(2,'0')}</small>{x.name}</button>)}</div><article className="featured"><small>STAGE {String(a+1).padStart(2,'0')} / 08</small><h3>{e.name}</h3><p>{e.description}</p><footer><b>{e.status}</b><time>{e.date}</time></footer></article></div></section>};
-function Timeline({events}){return <section className="section"><Heading n="04" kicker="THE ROADMAP">From first thought to final showcase.</Heading><div className="timeline">{events.map((e,i)=><article key={e.id}><b>{String(i+1).padStart(2,'0')}</b><h3>{e.name}</h3><p>{e.description}</p><small>{e.date}</small></article>)}</div><p className="opening">Opening Ceremony <b>— 24 August 2026</b></p></section>};
-function Eligibility(){return <section className="section" id="eligibility"><Heading n="05" kicker="WHO CAN PARTICIPATE">Built for every kind of thinker.</Heading><div className="eligible">{[['ALL DISCIPLINES','Open to all Banasthali Vidyapith students, irrespective of discipline or year of study. School students and participants registering through Unstop are also eligible.'],['INDIVIDUAL OR TEAM','Register independently or as a team. Teams can be formed during the Innovation Mixer if required.'],['3—5 MEMBERS','Multidisciplinary teams are encouraged, bringing varied perspectives to each solution.']].map(x=><article key={x[0]}><h3>{x[0]}</h3><p>{x[1]}</p></article>)}</div></section>};
-function Rules(){let r=['Teams must consist of 3–5 members, with one designated Team Leader.','Team members may be from different years and departments, but must belong to the same institution. Cross-institution teams are not permitted.','A participant may be a member of only one team throughout the competition.','Team composition cannot change after the registration deadline except with prior organizing committee approval under exceptional circumstances.','Individual registration is allowed; team formation may be facilitated during the Innovation Mixer.','Every team must present an original, unpublished idea. Plagiarism or copied solutions result in disqualification.','Teams are expected to participate in all rounds. Missing a mandatory round may result in elimination.','The judging panel and organizing committee decisions are final and binding.'];return <section className="section" id="rules"><Heading n="06" kicker="KNOW BEFORE YOU BUILD">Rules & regulations.</Heading><div className="rules">{r.map((x,i)=><details key={x}><summary><small>{String(i+1).padStart(2,'0')}</small>{x.split('. ')[0]}<b>+</b></summary><p>{x}</p></details>)}</div></section>};
-function Leaderboard({list}){return <section id="leaderboard" className="section"><Heading n="07" kicker="LIVE COMPETITION">Leaderboard.</Heading>{list.length?<div className="board">{list.map(t=><div key={t.id}><b>#{t.rank}</b><span>{t.teamName}</span><small>{t.currentStage}</small><strong>{t.score}</strong></div>)}</div>:<div className="empty"><span>⌁</span><h3>Leaderboard will be updated after the first evaluation.</h3><p>Checkpoint results and team standings will appear here.</p></div>}</section>};
-function App(){let[intro,setIntro]=useState(true),[events,setEvents]=useState(defaults),[board,setBoard]=useState([]);useEffect(()=>{fetch((import.meta.env.VITE_API_URL||'http://localhost:8787/api')+'/public').then(r=>r.json()).then(x=>{if(x.events?.length)setEvents(x.events);setBoard(x.leaderboard||[])}).catch(()=>{})},[]);return <>{intro&&<Intro done={()=>setIntro(false)}/>}<Navigation/><main><Hero/><About/><Why/><section className="manifesto">TRANSFORM IDEAS<br/>INTO <i>REALITY</i></section><Journey events={events}/><Timeline events={events}/><Eligibility/><Rules/><Leaderboard list={board}/></main><footer id="register"><small>READY TO TURN YOUR IDEA INTO IMPACT?</small><h2>MAKE THE<br/>FIRST MOVE.</h2><Register/><p><b>TECHNOVERSE 2.0</b> · ACM Student Chapter, Banasthali Vidyapith</p></footer></>};createRoot(document.getElementById('root')).render(<App/>);
+import React, { useState, useEffect } from "react";
+import { createRoot } from "react-dom/client";
+import "./styles.css";
+
+import { CyberBackground } from "./components/CyberBackground";
+import { Navbar } from "./components/Navbar";
+import { Hero } from "./components/Hero";
+import { About } from "./components/About";
+import { WhyParticipate } from "./components/WhyParticipate";
+import { JourneyTimeline } from "./components/JourneyTimeline";
+import { Eligibility } from "./components/Eligibility";
+import { Rules } from "./components/Rules";
+import { Leaderboard } from "./components/Leaderboard";
+import { RegistrationModal } from "./components/RegistrationModal";
+import { Footer } from "./components/Footer";
+
+const defaultEvents = [
+  ["Registration Opens", "Start your journey and submit your initial problem hypothesis."],
+  ["Innovation Mixer", "Meet collaborators, brainstorm ideas, and form cross-disciplinary squads."],
+  ["Market Validation Round", "Test relevance, user desirability, and commercial/real-world feasibility."],
+  ["Innovation Sprint", "Build and iterate software/hardware prototypes through intense sprint cycles."],
+  ["Milestone I", "Present intermediate working prototypes and receive jury feedback."],
+  ["Milestone II", "Advance system architecture, refine user experience, and prepare for scale."],
+  ["Semi-Finals", "Compete in the penultimate evaluation stage against shortlisted squads."],
+  ["Grand-Finale with Mayukh", "Celebrate the final demo showcase, competitive pitch, and awards ceremony."],
+].map(([name, description], i) => ({
+  id: i + 1,
+  name,
+  description,
+  date: "To Be Announced",
+  status: i === 0 ? "Open" : "Upcoming",
+}));
+
+function App() {
+  const [events, setEvents] = useState(defaultEvents);
+  const [leaderboard, setLeaderboard] = useState([]);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+
+  useEffect(() => {
+    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8787/api";
+    fetch(`${apiUrl}/public`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.events && Array.isArray(data.events) && data.events.length > 0) {
+          setEvents(data.events);
+        }
+        if (data.leaderboard && Array.isArray(data.leaderboard)) {
+          setLeaderboard(data.leaderboard);
+        }
+      })
+      .catch((err) => {
+        console.warn("API offline or unreachable, utilizing local default state:", err);
+      });
+  }, []);
+
+  return (
+    <div className="app-root">
+      {/* Ambient Cybernetic Particle & Lighting Background */}
+      <CyberBackground />
+
+      {/* Futuristic Glassmorphic HUD Navbar */}
+      <Navbar onOpenRegister={() => setIsRegisterOpen(true)} />
+
+      {/* Main Experience Stream */}
+      <main>
+        <Hero onOpenRegister={() => setIsRegisterOpen(true)} />
+        <About />
+        <WhyParticipate />
+        <JourneyTimeline events={events} />
+        <Eligibility />
+        <Rules />
+        <Leaderboard list={leaderboard} />
+      </main>
+
+      {/* Pre-Footer Banner & Footer Showcase */}
+      <Footer onOpenRegister={() => setIsRegisterOpen(true)} />
+
+      {/* Interactive Registration Dispatch Modal */}
+      <RegistrationModal
+        isOpen={isRegisterOpen}
+        onClose={() => setIsRegisterOpen(false)}
+      />
+    </div>
+  );
+}
+
+const rootElement = document.getElementById("root");
+if (rootElement) {
+  createRoot(rootElement).render(<App />);
+}
+
