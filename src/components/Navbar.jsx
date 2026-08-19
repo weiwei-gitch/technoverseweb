@@ -24,8 +24,6 @@ export function Navbar({ onOpenRegister }) {
   const navItems = [
     { href: "#about", label: "About", code: "01" },
     { href: "#why", label: "Why Join", code: "02" },
-    { href: "#journey", label: "Roadmap", code: "03" },
-    { href: "#eligibility", label: "Eligibility", code: "04" },
     { href: "#rules", label: "Rules", code: "05" },
     { href: "#leaderboard", label: "Leaderboard", code: "06" },
   ];
@@ -108,44 +106,6 @@ export function Navbar({ onOpenRegister }) {
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-        </div>
-      </div>
-
-      {/* Mobile Drawer Menu */}
-      <div className={`mobile-nav-drawer ${mobileMenuOpen ? "drawer-open" : ""}`}>
-        <div className="mobile-drawer-inner">
-          <div className="mobile-brand-row">
-            <AcmLogo compact={true} />
-            <span className="mobile-badge">TECHNOVERSE 2.0</span>
-          </div>
-          <nav className="mobile-nav-list">
-            {navItems.map((item) => (
-              <a
-                key={item.code}
-                href={item.href}
-                className="mobile-nav-link"
-                onClick={(e) => handleNavClick(e, item.href)}
-              >
-                <span className="mobile-nav-code">[{item.code}]</span>
-                <span className="mobile-nav-title">{item.label}</span>
-                <ArrowUpRight size={18} className="mobile-arrow" />
-              </a>
-            ))}
-          </nav>
-          <div className="mobile-drawer-footer">
-            <button
-              type="button"
-              className="register-mobile-btn"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                sounds.playClick();
-                onOpenRegister();
-              }}
-            >
-              <span>REGISTER FOR TECHNOVERSE 2.0</span>
-              <ArrowUpRight size={18} />
-            </button>
-          </div>
         </div>
       </div>
     </header>

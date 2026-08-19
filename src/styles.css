@@ -2494,3 +2494,9 @@ button {
     grid-template-columns: 1fr;
   }
 }
+.hud-corner.hud-bottom-left,
+.hero-side-nav,
+.side-nav,
+aside {
+    display: none !important;
+}
