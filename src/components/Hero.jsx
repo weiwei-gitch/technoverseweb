@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Scene3D } from "./Scene3D";
 import { sounds } from "./AudioEffects";
 import { AcmLogo } from "./AcmLogo";
@@ -67,14 +67,12 @@ export function Hero({ onOpenRegister }) {
           </span>
         </div>
 
-        {/* Massive Futuristic Title */}
+        {/* Massive Futuristic Title — single line */}
         <div className="hero-title-group">
-          <h1 className="hero-main-title">
-            <span className="title-row title-row-1">
-              TECHNO<span className="title-accent-dot">.</span>
-            </span>
-            <span className="title-row title-row-2">
-              VERSE <span className="title-version-badge">2.0</span>
+          <h1 className="hero-main-title hero-main-title--oneline">
+            <span className="title-inline-full">
+              TECHNOVERSE<span className="title-accent-dot">.</span>
+              &nbsp;<span className="title-version-badge">2.0</span>
             </span>
           </h1>
           <p className="hero-subtitle">
