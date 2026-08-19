@@ -8,7 +8,7 @@ export function Rules() {
   const rulesList = [
     {
       title: "Team Structure & Leadership",
-      detail: "Teams must consist of 3–5 members, with one designated Team Leader who will serve as the primary point of contact for all milestone submissions and communications.",
+      detail: "Teams must consist of 3–5 members, with one designated Team Leader who will serve as the primary point of contact for all milestone submissions and communications. In a team maximum of 2 students can be of a technical branch(CS/AI/IT) and the rest of the members must be of another course or different branch. ",
     },
     {
       title: "Institutional Affinity",
