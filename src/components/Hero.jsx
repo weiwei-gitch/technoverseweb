@@ -36,26 +36,6 @@ export function Hero({ onOpenRegister }) {
       {/* 3D Interactive Spatial Canvas */}
       <Scene3D />
 
-      {/* Cyber Grid HUD Overlay */}
-      <div className="hero-hud-frame">
-        <div className="hud-corner hud-top-left">
-          <span>SYS.LAT // 26.40° N</span>
-          <span>SYS.LON // 75.87° E</span>
-        </div>
-        <div className="hud-corner hud-top-right">
-          <span>FREQ // 2.40 GHZ</span>
-          <span className="text-cyan">LINK // STABLE</span>
-        </div>
-        <div className="hud-corner hud-bottom-left">
-          <span>ORG // ACM BV</span>
-          <span>PHASE // 01 REGISTRATION</span>
-        </div>
-        <div className="hud-corner hud-bottom-right">
-          <span>EVENT // TECHNOVERSE 2.0</span>
-          <span>CYCLE // 2026-2027</span>
-        </div>
-      </div>
-
       {/* Hero Content Container */}
       <div className="hero-content-wrapper">
         {/* Top Presenter Pill */}
