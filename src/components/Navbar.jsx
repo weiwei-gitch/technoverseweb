@@ -24,8 +24,8 @@ export function Navbar({ onOpenRegister }) {
   const navItems = [
     { href: "#about", label: "About", code: "01" },
     { href: "#why", label: "Why Join", code: "02" },
-    { href: "#rules", label: "Rules", code: "05" },
-    { href: "#leaderboard", label: "Leaderboard", code: "06" },
+    { href: "#rules", label: "Rules", code: "03" },
+    { href: "#leaderboard", label: "Leaderboard", code: "04" },
   ];
 
   const handleNavClick = (e, href) => {
