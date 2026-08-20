@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
-
+import MemoriesSection from "./components/MemoriesSection"; 
 import { CyberBackground } from "./components/CyberBackground";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
@@ -64,6 +64,7 @@ function App() {
       {/* Main Experience Stream */}
       <main>
         <Hero onOpenRegister={() => setIsRegisterOpen(true)} />
+        <MemoriesSection />
         <About onOpenRegister={() => setIsRegisterOpen(true)} />
         <WhyParticipate onOpenRegister={() => setIsRegisterOpen(true)} />
         <JourneyTimeline events={events} />
