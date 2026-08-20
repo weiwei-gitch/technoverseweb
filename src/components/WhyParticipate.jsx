@@ -6,11 +6,13 @@ import {
   TrendingUp,
   CheckCircle,
   Trophy,
+  Sparkles,
+  ChevronRight,
   X,
 } from "lucide-react";
 
 export function WhyParticipate() {
-  const [activeStep, setActiveStep] = useState(null);
+  const [activeStep, setActiveStep] = useState(0); // 01 active by default
 
   const steps = [
     {
@@ -63,10 +65,12 @@ export function WhyParticipate() {
     { text: "Visual hierarchy", color: "#ec4899" },
   ];
 
-  const handleStepToggle = (idx) => {
+  const handleStepSelect = (idx) => {
     sounds.playClick();
     setActiveStep((prev) => (prev === idx ? null : idx));
   };
+
+  const currentStep = activeStep !== null ? steps[activeStep] : null;
 
   return (
     <section className="why-section storytelling-section" id="why">
@@ -197,7 +201,7 @@ export function WhyParticipate() {
 
               {/* Glow Beneath the Ascending Trail */}
               <path
-                d="M 120 560 Q 280 530 430 440 T 660 310 T 850 200 T 955 115"
+                d="M 160 560 Q 300 520 440 440 T 660 310 T 850 200 T 955 115"
                 stroke="url(#mountainTrailGrad)"
                 strokeWidth="8"
                 strokeLinecap="round"
@@ -209,7 +213,7 @@ export function WhyParticipate() {
               {/* Winding Glowing Dashed Trail Climbing the Mountain */}
               <path
                 id="mountainMainPath"
-                d="M 120 560 Q 280 530 430 440 T 660 310 T 850 200 T 955 115"
+                d="M 160 560 Q 300 520 440 440 T 660 310 T 850 200 T 955 115"
                 stroke="url(#mountainTrailGrad)"
                 strokeWidth="3.5"
                 strokeDasharray="6,8"
@@ -241,11 +245,11 @@ export function WhyParticipate() {
 
               {/* Milestone Connection Dots on Path */}
               <g className="trail-nodes">
-                <circle cx="160" cy="550" r="8" fill="rgba(0, 240, 255, 0.2)" />
-                <circle cx="160" cy="550" r="4.5" fill="#ffffff" stroke="#00f0ff" strokeWidth="2.5" />
+                <circle cx="160" cy="560" r="8" fill="rgba(0, 240, 255, 0.2)" />
+                <circle cx="160" cy="560" r="4.5" fill="#ffffff" stroke="#00f0ff" strokeWidth="2.5" />
 
-                <circle cx="430" cy="440" r="8" fill="rgba(56, 189, 248, 0.2)" />
-                <circle cx="430" cy="440" r="4.5" fill="#ffffff" stroke="#38bdf8" strokeWidth="2.5" />
+                <circle cx="440" cy="440" r="8" fill="rgba(56, 189, 248, 0.2)" />
+                <circle cx="440" cy="440" r="4.5" fill="#ffffff" stroke="#38bdf8" strokeWidth="2.5" />
 
                 <circle cx="660" cy="310" r="8" fill="rgba(168, 85, 247, 0.2)" />
                 <circle cx="660" cy="310" r="4.5" fill="#ffffff" stroke="#a855f7" strokeWidth="2.5" />
@@ -256,7 +260,7 @@ export function WhyParticipate() {
             </svg>
           </div>
 
-          {/* Top Left Hero Content */}
+          {/* Top Left Hero Content & Active Milestone Inspector */}
           <div className="story-hero-content">
             <div className="story-category-tag">
               <span className="tag-cyan-text">F. STORYTELLING STYLE</span>
@@ -271,12 +275,43 @@ export function WhyParticipate() {
             <p className="story-lead-description">
               A year-long adventure of building, breaking, learning, and finally – leaving your mark.
             </p>
+
+            {/* Checkpoint Inspector Card: Appears right in this open left space! */}
+            {currentStep ? (
+              <div className="story-active-inspector-card">
+                <div className="inspector-top-row">
+                  <div className="inspector-tag-pill" style={{ color: currentStep.color, borderColor: `${currentStep.color}40` }}>
+                    <span className="inspector-dot" style={{ background: currentStep.color, boxShadow: `0 0 8px ${currentStep.color}` }} />
+                    <span>CHECKPOINT // {currentStep.num} — {currentStep.tag}</span>
+                  </div>
+                  <button
+                    type="button"
+                    className="inspector-close-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      sounds.playClick();
+                      setActiveStep(null);
+                    }}
+                    title="Close inspection"
+                  >
+                    <X size={13} />
+                  </button>
+                </div>
+                <h4 className="inspector-card-title">{currentStep.title}</h4>
+                <p className="inspector-card-desc">{currentStep.desc}</p>
+              </div>
+            ) : (
+              <div className="story-inspector-placeholder">
+                <Sparkles size={14} className="text-cyan" />
+                <span>Click any checkpoint icon along the trail to view details</span>
+              </div>
+            )}
           </div>
 
-          {/* Checkpoint Cards Positioned Along Path */}
+          {/* Checkpoint Nodes along the Mountain Trail */}
           <div className="story-checkpoints-overlay">
             {steps.map((step, idx) => {
-              const isActive = activeStep === idx;
+              const isSelected = activeStep === idx;
               const posClass = `step-pos-${idx + 1}`;
               const borderClass = `border-${step.num === "01" ? "cyan" : step.num === "02" ? "sky" : step.num === "03" ? "purple" : step.num === "04" ? "violet" : "pink"}-box`;
               const textClass = `text-${step.num === "01" ? "cyan" : step.num === "02" ? "sky" : step.num === "03" ? "purple" : step.num === "04" ? "violet" : "pink"}`;
@@ -284,46 +319,19 @@ export function WhyParticipate() {
               return (
                 <div
                   key={step.num}
-                  className={`story-step-node ${posClass} ${isActive ? "step-active" : ""}`}
-                  onClick={() => handleStepToggle(idx)}
+                  className={`story-step-node ${posClass} ${isSelected ? "step-active" : ""}`}
+                  onClick={() => handleStepSelect(idx)}
                   onMouseEnter={() => sounds.playHover()}
                 >
                   <div className="step-icon-col">
                     <span className={`step-num-pill ${textClass}`}>{step.num}</span>
-                    <div className={`step-card-box ${borderClass} ${isActive ? "box-selected" : ""}`}>
+                    <div className={`step-card-box ${borderClass} ${isSelected ? "box-selected" : ""}`}>
                       {step.icon}
                     </div>
                   </div>
 
                   <div className="step-info-col">
-                    <h4 className="step-title-text">{step.title}</h4>
-                    
-                    {/* Detail Description is shown ONLY when clicked */}
-                    {isActive && (
-                      <div
-                        className="step-detail-card-pop"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <div className="pop-header">
-                          <span className="pop-tag" style={{ color: step.color }}>
-                            {step.tag}
-                          </span>
-                          <button
-                            type="button"
-                            className="pop-close-btn"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              sounds.playClick();
-                              setActiveStep(null);
-                            }}
-                            title="Close"
-                          >
-                            <X size={12} />
-                          </button>
-                        </div>
-                        <p className="pop-desc-text">{step.desc}</p>
-                      </div>
-                    )}
+                    <span className="step-title-text">{step.title}</span>
                   </div>
                 </div>
               );
