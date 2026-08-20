@@ -44,12 +44,6 @@ export function JourneyTimeline({ events = [] }) {
       <div className="section-container">
         {/* Section Header */}
         <div className="section-header-row">
-          <div className="section-tag-box">
-            <span className="tag-bracket">[</span>
-            <span className="tag-num">03</span>
-            <span className="tag-label">COMPETITION ROADMAP</span>
-            <span className="tag-bracket">]</span>
-          </div>
           <h2 className="section-title">
             THE JOURNEY IS THE <span className="text-gradient-cyan">EVENT</span>.
           </h2>
@@ -63,7 +57,6 @@ export function JourneyTimeline({ events = [] }) {
           {/* Left: Interactive Stage Selector List */}
           <div className="stage-selector-list">
             <div className="selector-header">
-              <span>CHECKPOINT LIST</span>
               <span className="text-cyan">08 STAGES</span>
             </div>
 
@@ -103,22 +96,12 @@ export function JourneyTimeline({ events = [] }) {
           {/* Right: Holographic Stage Inspector Card */}
           <div className="stage-inspector-card">
             <div className="inspector-hud-top">
-              <div className="inspector-badge">
-                <Terminal size={14} className="text-cyan" />
-                <span>CHECKPOINT TELEMETRY</span>
-              </div>
               <span className="inspector-counter">
                 STAGE {String(activeStageIndex + 1).padStart(2, "0")} / {String(events.length).padStart(2, "0")}
               </span>
             </div>
 
             <div className="inspector-content">
-              <div className="inspector-stage-tag">
-                <span>CHECKPOINT {String(activeStageIndex + 1).padStart(2, "0")}</span>
-                <span className="tag-dot" />
-                <span className="text-cyan">{stageFocusAreas[activeStageIndex]?.target || "TARGET"}</span>
-              </div>
-
               <h3 className="inspector-title">{currentEvent.name}</h3>
               <p className="inspector-desc">{currentEvent.description}</p>
 

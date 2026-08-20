@@ -252,10 +252,6 @@ export function WhyParticipate() {
 
           {/* Top Left Hero Content */}
           <div className="story-hero-content">
-            <div className="story-category-tag">
-              <span className="tag-cyan-text">F. STORYTELLING STYLE</span>
-            </div>
-
             <h2 className="story-main-heading">
               This isn’t just a hackathon.
               <br />
