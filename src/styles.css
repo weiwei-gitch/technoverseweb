@@ -1574,12 +1574,23 @@ button {
   box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
 }
 
-/* Step Info Column (Title + Clear Details) */
+.step-card-box.box-selected {
+  transform: scale(1.12);
+  border-color: #ffffff !important;
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.7), inset 0 0 15px rgba(0, 240, 255, 0.4);
+}
+
+.story-step-node.step-active {
+  z-index: 50;
+}
+
+/* Step Info Column (Title beside icon) */
 .step-info-col {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  max-width: 220px;
+  gap: 4px;
+  max-width: 170px;
 }
 
 .step-title-text {
@@ -1590,27 +1601,89 @@ button {
   color: #ffffff;
   display: block;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
-}
-
-.step-detail-para {
-  font-size: 0.76rem;
-  color: #cbd5e1;
-  line-height: 1.42;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
-  background: rgba(4, 10, 28, 0.75);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 6px 10px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
   transition: var(--transition-fast);
 }
 
-.story-step-node:hover .step-detail-para {
-  border-color: rgba(0, 240, 255, 0.3);
-  color: #f1f5f9;
-  background: rgba(4, 12, 34, 0.9);
+.story-step-node:hover .step-title-text {
+  color: var(--neon-cyan);
+}
+
+/* Interactive Detail Card shown ONLY on click */
+.step-detail-card-pop {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 250px;
+  background: rgba(4, 12, 34, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(0, 240, 255, 0.2);
+  z-index: 100;
+  animation: popInDetail 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+}
+
+.step-pos-4 .step-detail-card-pop,
+.step-pos-5 .step-detail-card-pop {
+  left: auto;
+  right: 0;
+}
+
+@keyframes popInDetail {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.pop-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pop-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pop-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.pop-close-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.pop-desc-text {
+  font-size: 0.78rem;
+  color: #e2e8f0;
+  line-height: 1.45;
+  margin: 0;
 }
 
 /* Bottom Tips Bar */

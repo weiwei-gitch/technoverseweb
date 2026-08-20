@@ -6,10 +6,11 @@ import {
   TrendingUp,
   CheckCircle,
   Trophy,
+  X,
 } from "lucide-react";
 
 export function WhyParticipate() {
-  const [hoveredStep, setHoveredStep] = useState(null);
+  const [activeStep, setActiveStep] = useState(null);
 
   const steps = [
     {
@@ -61,6 +62,11 @@ export function WhyParticipate() {
     { text: "Benefits over features", color: "#a855f7" },
     { text: "Visual hierarchy", color: "#ec4899" },
   ];
+
+  const handleStepToggle = (idx) => {
+    sounds.playClick();
+    setActiveStep((prev) => (prev === idx ? null : idx));
+  };
 
   return (
     <section className="why-section storytelling-section" id="why">
@@ -235,19 +241,15 @@ export function WhyParticipate() {
 
               {/* Milestone Connection Dots on Path */}
               <g className="trail-nodes">
-                {/* Node 01 */}
                 <circle cx="160" cy="550" r="8" fill="rgba(0, 240, 255, 0.2)" />
                 <circle cx="160" cy="550" r="4.5" fill="#ffffff" stroke="#00f0ff" strokeWidth="2.5" />
 
-                {/* Node 02 */}
                 <circle cx="430" cy="440" r="8" fill="rgba(56, 189, 248, 0.2)" />
                 <circle cx="430" cy="440" r="4.5" fill="#ffffff" stroke="#38bdf8" strokeWidth="2.5" />
 
-                {/* Node 03 */}
                 <circle cx="660" cy="310" r="8" fill="rgba(168, 85, 247, 0.2)" />
                 <circle cx="660" cy="310" r="4.5" fill="#ffffff" stroke="#a855f7" strokeWidth="2.5" />
 
-                {/* Node 04 */}
                 <circle cx="850" cy="200" r="8" fill="rgba(192, 132, 252, 0.2)" />
                 <circle cx="850" cy="200" r="4.5" fill="#ffffff" stroke="#c084fc" strokeWidth="2.5" />
               </g>
@@ -271,114 +273,61 @@ export function WhyParticipate() {
             </p>
           </div>
 
-          {/* Checkpoint Cards Positioned Along Path with Clear Horizontal Layouts & Descriptions */}
+          {/* Checkpoint Cards Positioned Along Path */}
           <div className="story-checkpoints-overlay">
-            
-            {/* Step 01: Transform Ideas into Reality */}
-            <div
-              className={`story-step-node step-pos-1 ${hoveredStep === 0 ? "step-active" : ""}`}
-              onMouseEnter={() => {
-                sounds.playHover();
-                setHoveredStep(0);
-              }}
-              onMouseLeave={() => setHoveredStep(null)}
-            >
-              <div className="step-icon-col">
-                <span className="step-num-pill text-cyan">01</span>
-                <div className="step-card-box border-cyan-box">
-                  {steps[0].icon}
-                </div>
-              </div>
-              <div className="step-info-col">
-                <h4 className="step-title-text">{steps[0].title}</h4>
-                <p className="step-detail-para">{steps[0].desc}</p>
-              </div>
-            </div>
+            {steps.map((step, idx) => {
+              const isActive = activeStep === idx;
+              const posClass = `step-pos-${idx + 1}`;
+              const borderClass = `border-${step.num === "01" ? "cyan" : step.num === "02" ? "sky" : step.num === "03" ? "purple" : step.num === "04" ? "violet" : "pink"}-box`;
+              const textClass = `text-${step.num === "01" ? "cyan" : step.num === "02" ? "sky" : step.num === "03" ? "purple" : step.num === "04" ? "violet" : "pink"}`;
 
-            {/* Step 02: Collaborate Across Disciplines */}
-            <div
-              className={`story-step-node step-pos-2 ${hoveredStep === 1 ? "step-active" : ""}`}
-              onMouseEnter={() => {
-                sounds.playHover();
-                setHoveredStep(1);
-              }}
-              onMouseLeave={() => setHoveredStep(null)}
-            >
-              <div className="step-icon-col">
-                <span className="step-num-pill text-sky">02</span>
-                <div className="step-card-box border-sky-box">
-                  {steps[1].icon}
-                </div>
-              </div>
-              <div className="step-info-col">
-                <h4 className="step-title-text">{steps[1].title}</h4>
-                <p className="step-detail-para">{steps[1].desc}</p>
-              </div>
-            </div>
+              return (
+                <div
+                  key={step.num}
+                  className={`story-step-node ${posClass} ${isActive ? "step-active" : ""}`}
+                  onClick={() => handleStepToggle(idx)}
+                  onMouseEnter={() => sounds.playHover()}
+                >
+                  <div className="step-icon-col">
+                    <span className={`step-num-pill ${textClass}`}>{step.num}</span>
+                    <div className={`step-card-box ${borderClass} ${isActive ? "box-selected" : ""}`}>
+                      {step.icon}
+                    </div>
+                  </div>
 
-            {/* Step 03: Supercharge Your Skillset */}
-            <div
-              className={`story-step-node step-pos-3 ${hoveredStep === 2 ? "step-active" : ""}`}
-              onMouseEnter={() => {
-                sounds.playHover();
-                setHoveredStep(2);
-              }}
-              onMouseLeave={() => setHoveredStep(null)}
-            >
-              <div className="step-icon-col">
-                <span className="step-num-pill text-purple">03</span>
-                <div className="step-card-box border-purple-box">
-                  {steps[2].icon}
+                  <div className="step-info-col">
+                    <h4 className="step-title-text">{step.title}</h4>
+                    
+                    {/* Detail Description is shown ONLY when clicked */}
+                    {isActive && (
+                      <div
+                        className="step-detail-card-pop"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <div className="pop-header">
+                          <span className="pop-tag" style={{ color: step.color }}>
+                            {step.tag}
+                          </span>
+                          <button
+                            type="button"
+                            className="pop-close-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              sounds.playClick();
+                              setActiveStep(null);
+                            }}
+                            title="Close"
+                          >
+                            <X size={12} />
+                          </button>
+                        </div>
+                        <p className="pop-desc-text">{step.desc}</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className="step-info-col">
-                <h4 className="step-title-text">{steps[2].title}</h4>
-                <p className="step-detail-para">{steps[2].desc}</p>
-              </div>
-            </div>
-
-            {/* Step 04: Validate Your Market */}
-            <div
-              className={`story-step-node step-pos-4 ${hoveredStep === 3 ? "step-active" : ""}`}
-              onMouseEnter={() => {
-                sounds.playHover();
-                setHoveredStep(3);
-              }}
-              onMouseLeave={() => setHoveredStep(null)}
-            >
-              <div className="step-icon-col">
-                <span className="step-num-pill text-violet">04</span>
-                <div className="step-card-box border-violet-box">
-                  {steps[3].icon}
-                </div>
-              </div>
-              <div className="step-info-col">
-                <h4 className="step-title-text">{steps[3].title}</h4>
-                <p className="step-detail-para">{steps[3].desc}</p>
-              </div>
-            </div>
-
-            {/* Step 05: Gain Recognition & Prizes (Summit Peak) */}
-            <div
-              className={`story-step-node step-pos-5 ${hoveredStep === 4 ? "step-active" : ""}`}
-              onMouseEnter={() => {
-                sounds.playHover();
-                setHoveredStep(4);
-              }}
-              onMouseLeave={() => setHoveredStep(null)}
-            >
-              <div className="step-icon-col">
-                <span className="step-num-pill text-pink">05</span>
-                <div className="step-card-box border-pink-box">
-                  {steps[4].icon}
-                </div>
-              </div>
-              <div className="step-info-col">
-                <h4 className="step-title-text">{steps[4].title}</h4>
-                <p className="step-detail-para">{steps[4].desc}</p>
-              </div>
-            </div>
-
+              );
+            })}
           </div>
 
           {/* Bottom Tips Bar */}
