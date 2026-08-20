@@ -7,7 +7,7 @@ function CyberCore() {
   const outerRef = useRef();
   const innerRef = useRef();
   const ring1Ref = useRef();
-  const ring2Ref = useRef();
+ 
 
   useFrame((state, delta) => {
     const t = state.clock.getElapsedTime();
@@ -23,34 +23,31 @@ function CyberCore() {
       ring1Ref.current.rotation.x = Math.PI / 3 + Math.sin(t * 0.5) * 0.1;
       ring1Ref.current.rotation.z += delta * 0.35;
     }
-    if (ring2Ref.current) {
-      ring2Ref.current.rotation.y = Math.PI / 4 + Math.cos(t * 0.4) * 0.1;
-      ring2Ref.current.rotation.x += delta * 0.3;
-    }
+   
   });
 
   return (
     <group position={[0, 0, 0]}>
       {/* Outer Holographic Polyhedron */}
       <mesh ref={outerRef}>
-        <icosahedronGeometry args={[2.2, 1]} />
+        <icosahedronGeometry args={[2.2, 0]} />
         <meshStandardMaterial
           color="#00d2ff"
           wireframe
           transparent
-          opacity={0.35}
+          opacity={0.18}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
 
       {/* Middle High-density Wireframe */}
       <mesh ref={innerRef}>
-        <icosahedronGeometry args={[1.5, 2]} />
+        <icosahedronGeometry args={[1.5, 1]} />
         <meshStandardMaterial
           color="#1683ff"
           wireframe
           transparent
-          opacity={0.6}
+          opacity={0.32}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
@@ -61,7 +58,7 @@ function CyberCore() {
         <meshStandardMaterial
           color="#0066ff"
           emissive="#0055dd"
-          emissiveIntensity={1.8}
+          emissiveIntensity={1.25}
           roughness={0.2}
           metalness={0.9}
         />
@@ -73,23 +70,13 @@ function CyberCore() {
         <meshStandardMaterial
           color="#38bdf8"
           emissive="#00f0ff"
-          emissiveIntensity={0.8}
+          emissiveIntensity={0.55}
           transparent
-          opacity={0.7}
+          opacity={0.58}
         />
       </mesh>
 
-      {/* Orbital Ring 2 */}
-      <mesh ref={ring2Ref}>
-        <torusGeometry args={[3.8, 0.015, 16, 100]} />
-        <meshStandardMaterial
-          color="#0066ff"
-          emissive="#0066ff"
-          emissiveIntensity={0.6}
-          transparent
-          opacity={0.5}
-        />
-      </mesh>
+     
     </group>
   );
 }
@@ -123,7 +110,7 @@ function FloatingTechNodes() {
               emissive="#0066ff"
               emissiveIntensity={0.5}
               transparent
-              opacity={0.6}
+              opacity={0.30}
             />
           </mesh>
         </Float>
@@ -148,7 +135,7 @@ function SceneComposition({ mousePos }) {
   return (
     <group ref={sceneRef}>
       {/* Background Starfield */}
-      <Stars radius={70} depth={40} count={900} factor={3.5} saturation={0.5} fade speed={0.4} />
+      <Stars radius={70} depth={40} count={500} factor={2.2} saturation={0.35} fade speed={0.25} />
 
       {/* Cyber Core */}
       <Float speed={1.8} rotationIntensity={0.2} floatIntensity={0.8}>
