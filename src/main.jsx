@@ -68,7 +68,6 @@ function App() {
         <About onOpenRegister={() => setIsRegisterOpen(true)} />
         <WhyParticipate onOpenRegister={() => setIsRegisterOpen(true)} />
         <JourneyTimeline events={events} />
-        <Eligibility />
         <Rules />
         <Leaderboard list={leaderboard} />
       </main>
