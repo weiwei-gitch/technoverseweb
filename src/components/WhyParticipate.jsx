@@ -6,11 +6,10 @@ import {
   TrendingUp,
   CheckCircle,
   Trophy,
-  ChevronRight,
 } from "lucide-react";
 
-export function WhyParticipate({ onOpenRegister }) {
-  const [activeStep, setActiveStep] = useState(null);
+export function WhyParticipate() {
+  const [hoveredStep, setHoveredStep] = useState(null);
 
   const steps = [
     {
@@ -63,19 +62,6 @@ export function WhyParticipate({ onOpenRegister }) {
     { text: "Visual hierarchy", color: "#ec4899" },
   ];
 
-  const handleStartJourney = (e) => {
-    e.preventDefault();
-    sounds.playClick();
-    if (onOpenRegister) {
-      onOpenRegister();
-    } else {
-      const journeyEl = document.getElementById("journey");
-      if (journeyEl) {
-        journeyEl.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  };
-
   return (
     <section className="why-section storytelling-section" id="why">
       <div className="section-container">
@@ -86,7 +72,7 @@ export function WhyParticipate({ onOpenRegister }) {
           <div className="story-canvas-bg" aria-hidden="true">
             <svg
               className="mountain-vector-art"
-              viewBox="0 0 1200 620"
+              viewBox="0 0 1200 680"
               preserveAspectRatio="xMidYMid slice"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -139,12 +125,12 @@ export function WhyParticipate({ onOpenRegister }) {
                   <stop offset="100%" stopColor="#ec4899" stopOpacity="0" />
                 </radialGradient>
 
-                <radialGradient id="cyanNebula" cx="30%" cy="80%" r="60%">
-                  <stop offset="0%" stopColor="#00f0ff" stopOpacity="0.22" />
+                <radialGradient id="cyanNebula" cx="25%" cy="75%" r="60%">
+                  <stop offset="0%" stopColor="#00f0ff" stopOpacity="0.2" />
                   <stop offset="100%" stopColor="#00f0ff" stopOpacity="0" />
                 </radialGradient>
                 
-                <radialGradient id="purpleNebula" cx="80%" cy="30%" r="60%">
+                <radialGradient id="purpleNebula" cx="80%" cy="25%" r="60%">
                   <stop offset="0%" stopColor="#a855f7" stopOpacity="0.25" />
                   <stop offset="60%" stopColor="#ec4899" stopOpacity="0.12" />
                   <stop offset="100%" stopColor="#000000" stopOpacity="0" />
@@ -152,9 +138,9 @@ export function WhyParticipate({ onOpenRegister }) {
               </defs>
 
               {/* Sky Background */}
-              <rect width="1200" height="620" fill="url(#skyGrad)" />
-              <rect width="1200" height="620" fill="url(#cyanNebula)" />
-              <rect width="1200" height="620" fill="url(#purpleNebula)" />
+              <rect width="1200" height="680" fill="url(#skyGrad)" />
+              <rect width="1200" height="680" fill="url(#cyanNebula)" />
+              <rect width="1200" height="680" fill="url(#purpleNebula)" />
 
               {/* Cosmic Stars */}
               <g className="stars-cluster" opacity="0.8">
@@ -177,26 +163,26 @@ export function WhyParticipate({ onOpenRegister }) {
 
               {/* Distant Mountain Layer */}
               <path
-                d="M-20 440 L110 330 L220 380 L360 270 L510 340 L690 190 L820 280 L1010 90 L1140 180 L1240 130 L1240 640 L-20 640 Z"
+                d="M-20 480 L110 370 L220 420 L360 300 L510 380 L690 220 L820 310 L1010 110 L1140 200 L1240 150 L1240 700 L-20 700 Z"
                 fill="url(#backMtnGrad)"
                 opacity="0.7"
               />
 
               {/* Mid Mountain Layer with Ridge Lines */}
               <path
-                d="M-20 490 L90 390 L240 430 L420 320 L580 390 L770 210 L940 110 L1070 240 L1240 210 L1240 640 L-20 640 Z"
+                d="M-20 530 L90 430 L240 470 L420 360 L580 430 L770 240 L940 130 L1070 270 L1240 230 L1240 700 L-20 700 Z"
                 fill="url(#midMtnGrad)"
               />
 
               {/* Craggy Summit Peak Mountain Layer */}
               <path
-                d="M-20 540 L120 480 L280 510 L480 430 L660 380 L840 270 L955 105 L1060 260 L1240 320 L1240 640 L-20 640 Z"
+                d="M-20 580 L120 520 L280 550 L480 470 L660 410 L840 290 L955 115 L1060 280 L1240 340 L1240 700 L-20 700 Z"
                 fill="url(#summitMtnGrad)"
               />
 
               {/* Mountain Ridge Highlights / Slopes */}
               <path
-                d="M955 105 L840 270 L720 360 L540 440 L350 490 L180 540"
+                d="M955 115 L840 290 L720 390 L540 480 L350 530 L180 580"
                 stroke="rgba(168, 85, 247, 0.25)"
                 strokeWidth="2"
                 strokeLinecap="round"
@@ -205,7 +191,7 @@ export function WhyParticipate({ onOpenRegister }) {
 
               {/* Glow Beneath the Ascending Trail */}
               <path
-                d="M 220 535 Q 330 520 455 465 T 670 335 T 875 230 T 955 105"
+                d="M 120 560 Q 280 530 430 440 T 660 310 T 850 200 T 955 115"
                 stroke="url(#mountainTrailGrad)"
                 strokeWidth="8"
                 strokeLinecap="round"
@@ -217,7 +203,7 @@ export function WhyParticipate({ onOpenRegister }) {
               {/* Winding Glowing Dashed Trail Climbing the Mountain */}
               <path
                 id="mountainMainPath"
-                d="M 220 535 Q 330 520 455 465 T 670 335 T 875 230 T 955 105"
+                d="M 120 560 Q 280 530 430 440 T 660 310 T 850 200 T 955 115"
                 stroke="url(#mountainTrailGrad)"
                 strokeWidth="3.5"
                 strokeDasharray="6,8"
@@ -227,7 +213,7 @@ export function WhyParticipate({ onOpenRegister }) {
               />
 
               {/* Summit Flag & Pinnacle Light at Mountain Peak */}
-              <g className="summit-flag-group" transform="translate(955, 105)">
+              <g className="summit-flag-group" transform="translate(955, 115)">
                 <circle cx="0" cy="0" r="32" fill="url(#summitBeaconGlow)" />
                 <circle cx="0" cy="0" r="14" fill="#f43f5e" opacity="0.35" className="beacon-ping" />
                 
@@ -249,17 +235,21 @@ export function WhyParticipate({ onOpenRegister }) {
 
               {/* Milestone Connection Dots on Path */}
               <g className="trail-nodes">
-                <circle cx="220" cy="535" r="9" fill="rgba(0, 240, 255, 0.2)" />
-                <circle cx="220" cy="535" r="4.5" fill="#ffffff" stroke="#00f0ff" strokeWidth="2.5" />
+                {/* Node 01 */}
+                <circle cx="160" cy="550" r="8" fill="rgba(0, 240, 255, 0.2)" />
+                <circle cx="160" cy="550" r="4.5" fill="#ffffff" stroke="#00f0ff" strokeWidth="2.5" />
 
-                <circle cx="455" cy="465" r="9" fill="rgba(56, 189, 248, 0.2)" />
-                <circle cx="455" cy="465" r="4.5" fill="#ffffff" stroke="#38bdf8" strokeWidth="2.5" />
+                {/* Node 02 */}
+                <circle cx="430" cy="440" r="8" fill="rgba(56, 189, 248, 0.2)" />
+                <circle cx="430" cy="440" r="4.5" fill="#ffffff" stroke="#38bdf8" strokeWidth="2.5" />
 
-                <circle cx="670" cy="335" r="9" fill="rgba(168, 85, 247, 0.2)" />
-                <circle cx="670" cy="335" r="4.5" fill="#ffffff" stroke="#a855f7" strokeWidth="2.5" />
+                {/* Node 03 */}
+                <circle cx="660" cy="310" r="8" fill="rgba(168, 85, 247, 0.2)" />
+                <circle cx="660" cy="310" r="4.5" fill="#ffffff" stroke="#a855f7" strokeWidth="2.5" />
 
-                <circle cx="875" cy="230" r="9" fill="rgba(192, 132, 252, 0.2)" />
-                <circle cx="875" cy="230" r="4.5" fill="#ffffff" stroke="#c084fc" strokeWidth="2.5" />
+                {/* Node 04 */}
+                <circle cx="850" cy="200" r="8" fill="rgba(192, 132, 252, 0.2)" />
+                <circle cx="850" cy="200" r="4.5" fill="#ffffff" stroke="#c084fc" strokeWidth="2.5" />
               </g>
             </svg>
           </div>
@@ -279,124 +269,116 @@ export function WhyParticipate({ onOpenRegister }) {
             <p className="story-lead-description">
               A year-long adventure of building, breaking, learning, and finally – leaving your mark.
             </p>
-
-            <button
-              type="button"
-              className="story-journey-btn"
-              onClick={handleStartJourney}
-              onMouseEnter={() => sounds.playHover()}
-            >
-              <span>Start Your Journey</span>
-              <ChevronRight size={18} className="story-btn-arrow" />
-            </button>
           </div>
 
-          {/* Checkpoint Cards Positioned Along Path */}
+          {/* Checkpoint Cards Positioned Along Path with Clear Horizontal Layouts & Descriptions */}
           <div className="story-checkpoints-overlay">
-            {/* Step 01 */}
+            
+            {/* Step 01: Transform Ideas into Reality */}
             <div
-              className={`story-step-node step-pos-1 ${activeStep === 0 ? "step-active" : ""}`}
+              className={`story-step-node step-pos-1 ${hoveredStep === 0 ? "step-active" : ""}`}
               onMouseEnter={() => {
                 sounds.playHover();
-                setActiveStep(0);
+                setHoveredStep(0);
               }}
-              onMouseLeave={() => setActiveStep(null)}
+              onMouseLeave={() => setHoveredStep(null)}
             >
-              <div className="step-num-pill text-cyan">01</div>
-              <div className="step-card-box border-cyan-box">
-                <div className="step-icon-wrap">{steps[0].icon}</div>
+              <div className="step-icon-col">
+                <span className="step-num-pill text-cyan">01</span>
+                <div className="step-card-box border-cyan-box">
+                  {steps[0].icon}
+                </div>
               </div>
-              <div className="step-label-group">
-                <span className="step-title-text">{steps[0].title}</span>
-                {activeStep === 0 && (
-                  <p className="step-desc-tooltip">{steps[0].desc}</p>
-                )}
+              <div className="step-info-col">
+                <h4 className="step-title-text">{steps[0].title}</h4>
+                <p className="step-detail-para">{steps[0].desc}</p>
               </div>
             </div>
 
-            {/* Step 02 */}
+            {/* Step 02: Collaborate Across Disciplines */}
             <div
-              className={`story-step-node step-pos-2 ${activeStep === 1 ? "step-active" : ""}`}
+              className={`story-step-node step-pos-2 ${hoveredStep === 1 ? "step-active" : ""}`}
               onMouseEnter={() => {
                 sounds.playHover();
-                setActiveStep(1);
+                setHoveredStep(1);
               }}
-              onMouseLeave={() => setActiveStep(null)}
+              onMouseLeave={() => setHoveredStep(null)}
             >
-              <div className="step-num-pill text-sky">02</div>
-              <div className="step-card-box border-sky-box">
-                <div className="step-icon-wrap">{steps[1].icon}</div>
+              <div className="step-icon-col">
+                <span className="step-num-pill text-sky">02</span>
+                <div className="step-card-box border-sky-box">
+                  {steps[1].icon}
+                </div>
               </div>
-              <div className="step-label-group">
-                <span className="step-title-text">{steps[1].title}</span>
-                {activeStep === 1 && (
-                  <p className="step-desc-tooltip">{steps[1].desc}</p>
-                )}
+              <div className="step-info-col">
+                <h4 className="step-title-text">{steps[1].title}</h4>
+                <p className="step-detail-para">{steps[1].desc}</p>
               </div>
             </div>
 
-            {/* Step 03 */}
+            {/* Step 03: Supercharge Your Skillset */}
             <div
-              className={`story-step-node step-pos-3 ${activeStep === 2 ? "step-active" : ""}`}
+              className={`story-step-node step-pos-3 ${hoveredStep === 2 ? "step-active" : ""}`}
               onMouseEnter={() => {
                 sounds.playHover();
-                setActiveStep(2);
+                setHoveredStep(2);
               }}
-              onMouseLeave={() => setActiveStep(null)}
+              onMouseLeave={() => setHoveredStep(null)}
             >
-              <div className="step-num-pill text-purple">03</div>
-              <div className="step-card-box border-purple-box">
-                <div className="step-icon-wrap">{steps[2].icon}</div>
+              <div className="step-icon-col">
+                <span className="step-num-pill text-purple">03</span>
+                <div className="step-card-box border-purple-box">
+                  {steps[2].icon}
+                </div>
               </div>
-              <div className="step-label-group">
-                <span className="step-title-text">{steps[2].title}</span>
-                {activeStep === 2 && (
-                  <p className="step-desc-tooltip">{steps[2].desc}</p>
-                )}
+              <div className="step-info-col">
+                <h4 className="step-title-text">{steps[2].title}</h4>
+                <p className="step-detail-para">{steps[2].desc}</p>
               </div>
             </div>
 
-            {/* Step 04 */}
+            {/* Step 04: Validate Your Market */}
             <div
-              className={`story-step-node step-pos-4 ${activeStep === 3 ? "step-active" : ""}`}
+              className={`story-step-node step-pos-4 ${hoveredStep === 3 ? "step-active" : ""}`}
               onMouseEnter={() => {
                 sounds.playHover();
-                setActiveStep(3);
+                setHoveredStep(3);
               }}
-              onMouseLeave={() => setActiveStep(null)}
+              onMouseLeave={() => setHoveredStep(null)}
             >
-              <div className="step-num-pill text-violet">04</div>
-              <div className="step-card-box border-violet-box">
-                <div className="step-icon-wrap">{steps[3].icon}</div>
+              <div className="step-icon-col">
+                <span className="step-num-pill text-violet">04</span>
+                <div className="step-card-box border-violet-box">
+                  {steps[3].icon}
+                </div>
               </div>
-              <div className="step-label-group">
-                <span className="step-title-text">{steps[3].title}</span>
-                {activeStep === 3 && (
-                  <p className="step-desc-tooltip">{steps[3].desc}</p>
-                )}
+              <div className="step-info-col">
+                <h4 className="step-title-text">{steps[3].title}</h4>
+                <p className="step-detail-para">{steps[3].desc}</p>
               </div>
             </div>
 
-            {/* Step 05 - Summit */}
+            {/* Step 05: Gain Recognition & Prizes (Summit Peak) */}
             <div
-              className={`story-step-node step-pos-5 ${activeStep === 4 ? "step-active" : ""}`}
+              className={`story-step-node step-pos-5 ${hoveredStep === 4 ? "step-active" : ""}`}
               onMouseEnter={() => {
                 sounds.playHover();
-                setActiveStep(4);
+                setHoveredStep(4);
               }}
-              onMouseLeave={() => setActiveStep(null)}
+              onMouseLeave={() => setHoveredStep(null)}
             >
-              <div className="step-num-pill text-pink">05</div>
-              <div className="step-card-box border-pink-box">
-                <div className="step-icon-wrap">{steps[4].icon}</div>
+              <div className="step-icon-col">
+                <span className="step-num-pill text-pink">05</span>
+                <div className="step-card-box border-pink-box">
+                  {steps[4].icon}
+                </div>
               </div>
-              <div className="step-label-group">
-                <span className="step-title-text">{steps[4].title}</span>
-                {activeStep === 4 && (
-                  <p className="step-desc-tooltip">{steps[4].desc}</p>
-                )}
+              <div className="step-info-col">
+                <h4 className="step-title-text">{steps[4].title}</h4>
+                <p className="step-detail-para">{steps[4].desc}</p>
               </div>
             </div>
+
           </div>
 
           {/* Bottom Tips Bar */}
