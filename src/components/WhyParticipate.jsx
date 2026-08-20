@@ -6,13 +6,10 @@ import {
   TrendingUp,
   CheckCircle,
   Trophy,
-  Sparkles,
-  ChevronRight,
-  X,
 } from "lucide-react";
 
 export function WhyParticipate() {
-  const [activeStep, setActiveStep] = useState(0); // 01 active by default
+  const [hoveredStep, setHoveredStep] = useState(null);
 
   const steps = [
     {
@@ -64,13 +61,6 @@ export function WhyParticipate() {
     { text: "Benefits over features", color: "#a855f7" },
     { text: "Visual hierarchy", color: "#ec4899" },
   ];
-
-  const handleStepSelect = (idx) => {
-    sounds.playClick();
-    setActiveStep((prev) => (prev === idx ? null : idx));
-  };
-
-  const currentStep = activeStep !== null ? steps[activeStep] : null;
 
   return (
     <section className="why-section storytelling-section" id="why">
@@ -260,7 +250,7 @@ export function WhyParticipate() {
             </svg>
           </div>
 
-          {/* Top Left Hero Content & Active Milestone Inspector */}
+          {/* Top Left Hero Content */}
           <div className="story-hero-content">
             <div className="story-category-tag">
               <span className="tag-cyan-text">F. STORYTELLING STYLE</span>
@@ -275,43 +265,12 @@ export function WhyParticipate() {
             <p className="story-lead-description">
               A year-long adventure of building, breaking, learning, and finally – leaving your mark.
             </p>
-
-            {/* Checkpoint Inspector Card: Appears right in this open left space! */}
-            {currentStep ? (
-              <div className="story-active-inspector-card">
-                <div className="inspector-top-row">
-                  <div className="inspector-tag-pill" style={{ color: currentStep.color, borderColor: `${currentStep.color}40` }}>
-                    <span className="inspector-dot" style={{ background: currentStep.color, boxShadow: `0 0 8px ${currentStep.color}` }} />
-                    <span>CHECKPOINT // {currentStep.num} — {currentStep.tag}</span>
-                  </div>
-                  <button
-                    type="button"
-                    className="inspector-close-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      sounds.playClick();
-                      setActiveStep(null);
-                    }}
-                    title="Close inspection"
-                  >
-                    <X size={13} />
-                  </button>
-                </div>
-                <h4 className="inspector-card-title">{currentStep.title}</h4>
-                <p className="inspector-card-desc">{currentStep.desc}</p>
-              </div>
-            ) : (
-              <div className="story-inspector-placeholder">
-                <Sparkles size={14} className="text-cyan" />
-                <span>Click any checkpoint icon along the trail to view details</span>
-              </div>
-            )}
           </div>
 
           {/* Checkpoint Nodes along the Mountain Trail */}
           <div className="story-checkpoints-overlay">
             {steps.map((step, idx) => {
-              const isSelected = activeStep === idx;
+              const isHovered = hoveredStep === idx;
               const posClass = `step-pos-${idx + 1}`;
               const borderClass = `border-${step.num === "01" ? "cyan" : step.num === "02" ? "sky" : step.num === "03" ? "purple" : step.num === "04" ? "violet" : "pink"}-box`;
               const textClass = `text-${step.num === "01" ? "cyan" : step.num === "02" ? "sky" : step.num === "03" ? "purple" : step.num === "04" ? "violet" : "pink"}`;
@@ -319,19 +278,29 @@ export function WhyParticipate() {
               return (
                 <div
                   key={step.num}
-                  className={`story-step-node ${posClass} ${isSelected ? "step-active" : ""}`}
-                  onClick={() => handleStepSelect(idx)}
-                  onMouseEnter={() => sounds.playHover()}
+                  className={`story-step-node ${posClass} ${isHovered ? "step-hovered" : ""}`}
+                  onMouseEnter={() => {
+                    sounds.playHover();
+                    setHoveredStep(idx);
+                  }}
+                  onMouseLeave={() => setHoveredStep(null)}
                 >
                   <div className="step-icon-col">
                     <span className={`step-num-pill ${textClass}`}>{step.num}</span>
-                    <div className={`step-card-box ${borderClass} ${isSelected ? "box-selected" : ""}`}>
+                    <div className={`step-card-box ${borderClass} ${isHovered ? "box-selected" : ""}`}>
                       {step.icon}
                     </div>
                   </div>
 
                   <div className="step-info-col">
                     <span className="step-title-text">{step.title}</span>
+
+                    {/* Small compact tooltip shown ONLY on hover */}
+                    {isHovered && (
+                      <div className="step-mini-tooltip">
+                        <p className="mini-tooltip-text">{step.desc}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
