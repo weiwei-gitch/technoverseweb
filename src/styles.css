@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 /* ==========================================================================
    TECHNOVERSE 2.O — FUTURISTIC DESIGN SYSTEM
@@ -584,6 +585,7 @@ button {
 }
 
 .hero-main-title {
+  font-family: 'Orbitron', sans-serif;
   font-size: clamp(3rem, 9.5vw, 7.8rem);
   font-weight: 900;
   line-height: 0.95;
