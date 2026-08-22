@@ -35,19 +35,19 @@ function CyberCore() {
           color="#00d2ff"
           wireframe
           transparent
-          opacity={0.18}
+          opacity={0.14}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
 
       {/* Middle High-density Wireframe */}
       <mesh ref={innerRef}>
-        <icosahedronGeometry args={[1.5, 1]} />
+        <icosahedronGeometry args={[1.5, 0]} />
         <meshStandardMaterial
           color="#1683ff"
           wireframe
           transparent
-          opacity={0.32}
+          opacity={0.22}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
