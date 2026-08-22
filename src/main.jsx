@@ -1,28 +1,53 @@
 import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
-import MemoriesSection from "./components/MemoriesSection"; 
+
+import MemoriesSection from "./components/MemoriesSection";
 import { CyberBackground } from "./components/CyberBackground";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { About } from "./components/About";
 import { WhyParticipate } from "./components/WhyParticipate";
 import { JourneyTimeline } from "./components/JourneyTimeline";
-import { Eligibility } from "./components/Eligibility";
 import { Rules } from "./components/Rules";
 import { Leaderboard } from "./components/Leaderboard";
 import { RegistrationModal } from "./components/RegistrationModal";
+import QuerySection from "./components/QuerySection";
 import { Footer } from "./components/Footer";
 
 const defaultEvents = [
-  ["Registration Opens", "Start your journey and submit your initial problem hypothesis."],
-  ["Innovation Mixer", "Meet collaborators, brainstorm ideas, and form cross-disciplinary squads."],
-  ["Market Validation Round", "Test relevance, user desirability, and commercial/real-world feasibility."],
-  ["Innovation Sprint", "Build and iterate software/hardware prototypes through intense sprint cycles."],
-  ["Milestone I", "Present intermediate working prototypes and receive jury feedback."],
-  ["Milestone II", "Advance system architecture, refine user experience, and prepare for scale."],
-  ["Semi-Finals", "Compete in the penultimate evaluation stage against shortlisted squads."],
-  ["Grand-Finale with Mayukh", "Celebrate the final demo showcase, competitive pitch, and awards ceremony."],
+  [
+    "Registration Opens",
+    "Start your journey and submit your initial problem hypothesis.",
+  ],
+  [
+    "Innovation Mixer",
+    "Meet collaborators, brainstorm ideas, and form cross-disciplinary squads.",
+  ],
+  [
+    "Market Validation Round",
+    "Test relevance, user desirability, and commercial/real-world feasibility.",
+  ],
+  [
+    "Innovation Sprint",
+    "Build and iterate software/hardware prototypes through intense sprint cycles.",
+  ],
+  [
+    "Milestone I",
+    "Present intermediate working prototypes and receive jury feedback.",
+  ],
+  [
+    "Milestone II",
+    "Advance system architecture, refine user experience, and prepare for scale.",
+  ],
+  [
+    "Semi-Finals",
+    "Compete in the penultimate evaluation stage against shortlisted squads.",
+  ],
+  [
+    "Grand-Finale with Mayukh",
+    "Celebrate the final demo showcase, competitive pitch, and awards ceremony.",
+  ],
 ].map(([name, description], i) => ({
   id: i + 1,
   name,
@@ -37,19 +62,29 @@ function App() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8787/api";
+    const apiUrl =
+      import.meta.env.VITE_API_URL || "http://localhost:8787/api";
+
     fetch(`${apiUrl}/public`)
       .then((res) => res.json())
       .then((data) => {
-        if (data.events && Array.isArray(data.events) && data.events.length > 0) {
+        if (
+          data.events &&
+          Array.isArray(data.events) &&
+          data.events.length > 0
+        ) {
           setEvents(data.events);
         }
+
         if (data.leaderboard && Array.isArray(data.leaderboard)) {
           setLeaderboard(data.leaderboard);
         }
       })
       .catch((err) => {
-        console.warn("API offline or unreachable, utilizing local default state:", err);
+        console.warn(
+          "API offline or unreachable, using local default state:",
+          err
+        );
       });
   }, []);
 
@@ -58,24 +93,35 @@ function App() {
       {/* Ambient Cybernetic Particle & Lighting Background */}
       <CyberBackground />
 
-      {/* Futuristic Glassmorphic HUD Navbar */}
+      {/* Futuristic Navbar */}
       <Navbar onOpenRegister={() => setIsRegisterOpen(true)} />
 
-      {/* Main Experience Stream */}
+      {/* Main Experience */}
       <main>
         <Hero onOpenRegister={() => setIsRegisterOpen(true)} />
+
         <MemoriesSection />
+
         <About onOpenRegister={() => setIsRegisterOpen(true)} />
-        <WhyParticipate onOpenRegister={() => setIsRegisterOpen(true)} />
+
+        <WhyParticipate
+          onOpenRegister={() => setIsRegisterOpen(true)}
+        />
+
         <JourneyTimeline events={events} />
+
         <Rules />
+
         <Leaderboard list={leaderboard} />
+
+        {/* Query Section */}
+        <QuerySection />
       </main>
 
-      {/* Pre-Footer Banner & Footer Showcase */}
+      {/* Footer */}
       <Footer onOpenRegister={() => setIsRegisterOpen(true)} />
 
-      {/* Interactive Registration Dispatch Modal */}
+      {/* Registration Modal */}
       <RegistrationModal
         isOpen={isRegisterOpen}
         onClose={() => setIsRegisterOpen(false)}
@@ -85,7 +131,7 @@ function App() {
 }
 
 const rootElement = document.getElementById("root");
+
 if (rootElement) {
   createRoot(rootElement).render(<App />);
 }
-
