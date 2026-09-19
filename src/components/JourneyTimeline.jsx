@@ -114,13 +114,23 @@ export function JourneyTimeline({ events = [] }) {
                   <strong className="metric-box-val">{currentEvent.date}</strong>
                 </div>
 
-                <div className="inspector-metric-box">
-                  <div className="metric-box-label">
-                    <Flag size={14} />
-                    <span>CURRENT STATUS</span>
+                {currentEvent.name === "Innovation Mixer" ? (
+                  <div className="inspector-metric-box">
+                    <div className="metric-box-label">
+                      <Flag size={14} />
+                      <span>VENUE</span>
+                    </div>
+                    <strong className="metric-box-val text-cyan">Apaji CMS 103</strong>
                   </div>
-                  <strong className="metric-box-val text-cyan">{currentEvent.status}</strong>
-                </div>
+                ) : (
+                  <div className="inspector-metric-box">
+                    <div className="metric-box-label">
+                      <Flag size={14} />
+                      <span>CURRENT STATUS</span>
+                    </div>
+                    <strong className="metric-box-val text-cyan">{currentEvent.status}</strong>
+                  </div>
+                )}
               </div>
 
               <div className="inspector-deliverable-panel">

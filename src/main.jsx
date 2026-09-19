@@ -52,8 +52,8 @@ const defaultEvents = [
   id: i + 1,
   name,
   description,
-  date: "To Be Announced",
-  status: i === 0 ? "Open" : "Upcoming",
+  date: i === 0 ? "Announced" : i === 1 ? "21 September" : "To Be Announced",
+  status: i === 0 ? "OPEN" : i === 1 ? "OPEN" : "UPCOMING",
 }));
 
 function App() {

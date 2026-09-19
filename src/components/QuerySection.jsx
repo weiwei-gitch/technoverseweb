@@ -3,7 +3,11 @@ import "./querySection.css";
 
 const QuerySection = () => {
   const handleQuery = () => {
-    window.open("YOUR_GOOGLE_FORM_URL", "_blank");
+    window.open(
+      "https://docs.google.com/forms/d/e/1FAIpQLSc7G8DDhyNW22b-xqPiC7z2o1dq8KxAcKPfhmeKvF1bUaDSKQ/viewform?usp=header",
+      "_blank",
+      "noopener,noreferrer"
+    );
   };
 
   return (
