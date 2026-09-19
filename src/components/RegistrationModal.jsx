@@ -4,30 +4,23 @@ import { X, ArrowUpRight, Copy, Check, ShieldCheck, Sparkles, UserPlus, Users } 
 
 export function RegistrationModal({ isOpen, onClose }) {
   const [copied, setCopied] = useState(false);
-  const regUrl = import.meta.env.VITE_REGISTRATION_FORM_URL || "";
+  
+  // Default registration Google Form link
+  const DEFAULT_REG_URL = "https://forms.gle/kQ1hWVtDPExpK2j28";
+  const regUrl = import.meta.env.VITE_REGISTRATION_FORM_URL || DEFAULT_REG_URL;
 
   if (!isOpen) return null;
 
   const handleCopyLink = () => {
     sounds.playClick();
-    if (regUrl) {
-      navigator.clipboard.writeText(regUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
+    navigator.clipboard.writeText(regUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const handleOpenLink = () => {
     sounds.playClick();
-    if (regUrl) {
-      window.open(regUrl, "_blank", "noopener,noreferrer");
-    } else {
-      alert("Official registration portal link will be announced soon by ACM Student Chapter, Banasthali Vidyapith.");
-    }
+    window.open(regUrl, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -97,7 +90,7 @@ export function RegistrationModal({ isOpen, onClose }) {
               onClick={handleOpenLink}
               onMouseEnter={() => sounds.playHover()}
             >
-              <span>{regUrl ? "OPEN OFFICIAL PORTAL" : "PROCEED TO REGISTRATION"}</span>
+              <span>OPEN OFFICIAL PORTAL</span>
               <ArrowUpRight size={18} />
             </button>
 
