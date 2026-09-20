@@ -5,14 +5,36 @@ import { AcmLogo } from "./AcmLogo";
 import { ArrowUpRight, ChevronDown, Sparkles, Terminal, Shield, Zap, Flame, Compass } from "lucide-react";
 
 export function Hero({ onOpenRegister }) {
-  // Live Countdown to Opening Ceremony (24 August 2026)
+  // Live Countdown State
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [formattedTargetDate, setFormattedTargetDate] = useState("");
 
   useEffect(() => {
-    const targetDate = new Date("2026-08-24T09:00:00+05:30").getTime();
+    
+    const now = new Date();
+    const dayOfWeek = now.getDay(); 
+   
+    let daysUntilTuesday = (2 - dayOfWeek + 7) % 7;
+    
+    
+    if (daysUntilTuesday === 0) {
+      daysUntilTuesday = 7;
+    }
+
+    const targetDate = new Date(now);
+    targetDate.setDate(now.getDate() + daysUntilTuesday);
+    targetDate.setHours(14, 0, 0, 0); // Set time to 00:00:00 midnight
+
+    // Format target date text dynamically (e.g., "22 SEPTEMBER 2026")
+    const options = { day: "numeric", month: "long", year: "numeric" };
+    setFormattedTargetDate(targetDate.toLocaleDateString("en-GB", options).toUpperCase());
+
+    const targetTime = targetDate.getTime();
+
+    // 2. Countdown Update Interval
     const updateCountdown = () => {
-      const now = new Date().getTime();
-      const difference = targetDate - now;
+      const currentTime = new Date().getTime();
+      const difference = targetTime - currentTime;
 
       if (difference > 0) {
         setTimeLeft({
@@ -94,9 +116,9 @@ export function Hero({ onOpenRegister }) {
           <div className="countdown-header">
             <div className="countdown-live-tag">
               <span className="pulse-dot" />
-              <span>OPENING CEREMONY COUNTDOWN</span>
+              <span>Innovation Mixture Countdown</span>
             </div>
-            <span className="countdown-date">24 AUGUST 2026</span>
+            <span className="countdown-date">{formattedTargetDate || "THIS TUESDAY"}</span>
           </div>
           <div className="countdown-timer-grid">
             <div className="countdown-slot">
