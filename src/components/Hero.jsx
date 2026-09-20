@@ -5,33 +5,38 @@ import { AcmLogo } from "./AcmLogo";
 import { ArrowUpRight, ChevronDown, Sparkles, Terminal, Shield, Zap, Flame, Compass } from "lucide-react";
 
 export function Hero({ onOpenRegister }) {
+  // Official Registration Google Form Link
+  const REGISTRATION_URL = import.meta.env.VITE_REGISTRATION_FORM_URL || "https://forms.gle/kQ1hWVtDPExpK2j28";
+
   // Live Countdown State
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [formattedTargetDate, setFormattedTargetDate] = useState("");
 
   useEffect(() => {
-    
+    // 1. Calculate Upcoming Tuesday at 2:00 PM (14:00)
     const now = new Date();
-    const dayOfWeek = now.getDay(); 
-   
+    const dayOfWeek = now.getDay(); // 0 = Sun, 1 = Mon, 2 = Tue, ...
+    
+    // Days until upcoming Tuesday
     let daysUntilTuesday = (2 - dayOfWeek + 7) % 7;
     
-    
-    if (daysUntilTuesday === 0) {
+    // If today is Tuesday and past 2:00 PM, target the next Tuesday
+    if (daysUntilTuesday === 0 && now.getHours() >= 14) {
       daysUntilTuesday = 7;
     }
 
     const targetDate = new Date(now);
     targetDate.setDate(now.getDate() + daysUntilTuesday);
-    targetDate.setHours(14, 0, 0, 0); // Set time to 00:00:00 midnight
+    targetDate.setHours(14, 0, 0, 0); // 2:00 PM (14:00 IST)
 
-    // Format target date text dynamically (e.g., "22 SEPTEMBER 2026")
+    // Format target date text dynamically (e.g., "22 SEPTEMBER 2026 — 2:00 PM")
     const options = { day: "numeric", month: "long", year: "numeric" };
-    setFormattedTargetDate(targetDate.toLocaleDateString("en-GB", options).toUpperCase());
+    const dateStr = targetDate.toLocaleDateString("en-GB", options).toUpperCase();
+    setFormattedTargetDate(`${dateStr} — 2:00 PM`);
 
     const targetTime = targetDate.getTime();
 
-    // 2. Countdown Update Interval
+    // 2. Countdown Interval Update
     const updateCountdown = () => {
       const currentTime = new Date().getTime();
       const difference = targetTime - currentTime;
@@ -89,7 +94,7 @@ export function Hero({ onOpenRegister }) {
             className="hero-primary-btn"
             onClick={() => {
               sounds.playClick();
-              onOpenRegister();
+              window.open(REGISTRATION_URL, "_blank", "noopener,noreferrer");
             }}
             onMouseEnter={() => sounds.playHover()}
           >
@@ -116,9 +121,9 @@ export function Hero({ onOpenRegister }) {
           <div className="countdown-header">
             <div className="countdown-live-tag">
               <span className="pulse-dot" />
-              <span>Innovation Mixture Countdown</span>
+              <span>OPENING CEREMONY COUNTDOWN</span>
             </div>
-            <span className="countdown-date">{formattedTargetDate || "THIS TUESDAY"}</span>
+            <span className="countdown-date">{formattedTargetDate || "TUESDAY — 2:00 PM"}</span>
           </div>
           <div className="countdown-timer-grid">
             <div className="countdown-slot">
