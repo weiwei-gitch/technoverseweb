@@ -52,7 +52,7 @@ const defaultEvents = [
   id: i + 1,
   name,
   description,
-  date: i === 0 ? "Announced" : i === 1 ? "21 September" : "To Be Announced",
+  date: i === 0 ? "Announced" : i === 1 ? "22 September" : "To Be Announced",
   status: i === 0 ? "OPEN" : i === 1 ? "OPEN" : "UPCOMING",
 }));
 
